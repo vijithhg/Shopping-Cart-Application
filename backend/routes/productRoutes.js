@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const upload = require('../middleware/multer')
 const { addProduct, getAllProduct, getProductById, updateProductById, deleteProductById } = require('../controllers/productController')
+const { authMiddleWare } = require('../middleware/authMiddleware')
 
 router.post('/', upload.single('image') , addProduct)
 router.get('/', getAllProduct)

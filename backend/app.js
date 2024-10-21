@@ -4,6 +4,8 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const connectDB = require('./config/db')
 const productRoutes = require('./routes/productRoutes')
+const authRoutes = require('./routes/authRoutes')
+
 
 dotenv.config()
 const PORT = process.env.PORT || 8000
@@ -16,6 +18,7 @@ connectDB()
 
 
 app.use('/api/products', productRoutes)
+app.use('/api/auth', authRoutes)
 
 
 
