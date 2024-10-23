@@ -3,7 +3,6 @@ const Product = require('../models/Product');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken')
 
-// Add an item to the cart or update quantity if it already exists
 const addItemToCart = async (req, res) => {
   const { productID, quantity } = req.body;
   if(!productID ){
