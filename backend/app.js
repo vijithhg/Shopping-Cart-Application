@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const connectDB = require('./config/db')
 const productRoutes = require('./routes/productRoutes')
 const authRoutes = require('./routes/authRoutes')
+const cartRoutes = require('./routes/cartRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 
 dotenv.config()
@@ -19,6 +21,8 @@ connectDB()
 
 app.use('/api/products', productRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/cart', cartRoutes)
+app.use('/api/user',userRoutes)
 
 
 
