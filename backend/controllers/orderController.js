@@ -1,16 +1,29 @@
 const Order = require('../models/Order');
 const User = require('../models/userModel');
 const Product = require('../models/Product');
+const jwt = require('jsonwebtoken')
 
 // Create a new order
 const createOrder = async (req, res) => {
-  const { userID, products } = req.body;
-
+  const { products,address } = req.body;
+  const token = req.headers['authorization']?.split(' ')[1]; 
+  if (!token) {
+    return res.status(403).json({
+      message: 'Authentication required',
+    });
+  }
+  let userID;
   try {
-    // Fetch user from the database
+    const decoded = jwt.verify(token, 'test'); 
+    userID = decoded.id;
     const user = await User.findById(userID);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (address) {
+      user.address = address;
+      await user.save(); 
     }
 
     // Calculate the total amount and update product stock
@@ -87,9 +100,18 @@ const getOrderById = async (req, res) => {
 
 // Get all orders for a specific user
 const getOrdersByUser = async (req, res) => {
-  const { userID } = req.params;
+  const token = req.headers['authorization']?.split(' ')[1]; 
 
+  if (!token) {
+    return res.status(403).json({
+      message: 'Authentication required',
+    });
+  }
+
+  let userID;
   try {
+    const decoded = jwt.verify(token, 'test'); // Replace 'test' with your actual secret
+    userID = decoded.id;
     const orders = await Order.find({ userID }).populate('products.productID');
     if (!orders || orders.length === 0) {
       return res.status(404).json({ message: 'No orders found for this user' });
