@@ -1,11 +1,7 @@
-import { useState } from "react"
+
 
 const Login = () => {
-    const [userInfo, setUserInfo]= useState({
-        name:'',
-        email:'',
-        password:''
-    })
+   
 
     return (
         <div>
