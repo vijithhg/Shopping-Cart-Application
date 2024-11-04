@@ -4,6 +4,7 @@ import './App.css'
 import LoginRegister from './pages/LoginRegister'
 import ProductList from './pages/ProductList';
 import ProtectedRoute from './middleware/ProtectedRoute';
+import Cart from './pages/Cart';
 
 function App() {
 
@@ -18,6 +19,13 @@ function App() {
        
         
         } />
+        <Route path='/cart' element={
+          <ProtectedRoute>
+             <Cart/>
+          </ProtectedRoute>
+         
+          
+          }></Route>
     </Routes>
 
    </Router>

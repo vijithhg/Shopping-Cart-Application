@@ -8,13 +8,19 @@ const authRoutes = require('./routes/authRoutes')
 const cartRoutes = require('./routes/cartRoutes')
 const userRoutes = require('./routes/userRoutes')
 const orderRoutes = require('./routes/orderRouter')
+const path = require('path')
 
 
 dotenv.config()
 const PORT = process.env.PORT || 8000
 
+
+
 const app = express()
 app.use(cors())
+
+// Set the uploads folder as a static directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(bodyParser.json())
 
 connectDB()

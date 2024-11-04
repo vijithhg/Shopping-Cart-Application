@@ -1,4 +1,3 @@
-
 const  ProductModel =  require("../models/Product")
 
 
@@ -32,9 +31,15 @@ const addProduct = async(req,res)=>{
 const getAllProduct = async(req,res)=>{
     try{
         const products = await ProductModel.find()
+        const updatedProducts = products.map(product => {
+            return {
+                ...product._doc,
+                image: `${process.env.IMAGE_URL}/uploads/${product.image}` 
+            };
+        });
         res.status(200).json({
             success:true,
-            products
+            products:updatedProducts
         })
     }catch(error){
         res.status(500).json({
@@ -71,24 +76,31 @@ const getProductById = async(req,res)=>{
 
 }
 
-const updateProductById=async(req,res)=>{
-    const {id} = req.params
-    try{
-        const product = await ProductModel.findByIdAndUpdate(
-        id,        
-        req.body)          
-    
-        res.status(200).json({
-            success:true,
-            message:'User Updated Successfully'
-        })
-    }catch(error){
-        res.status(500).json({
-            Message: 'Internal Server Error',
-            error: error.message
-        })
+const updateProductById = async(req, res) => {
+    const { id } = req.params;
+    try {
+      const product = await ProductModel.findByIdAndUpdate(
+        id,
+        req.body,
+        { new: true, runValidators: true }  
+      );
+  
+      if (!product) {
+        return res.status(404).json({ success: false, message: 'Product not found' });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: 'Product Updated Successfully',
+        updatedProduct: product, 
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Internal Server Error',
+        error: error.message,
+      });
     }
-}
+  };
 
 const deleteProductById=async(req,res)=>{
     const {id} = req.params
@@ -96,7 +108,7 @@ const deleteProductById=async(req,res)=>{
         const product = await ProductModel.findByIdAndDelete(id)
         res.status(200).json({
             success:true,
-            message:'User deleted successfully'
+            message:'Product deleted successfully'
         })
     }catch(error){
         res.status(500).json({
