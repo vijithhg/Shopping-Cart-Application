@@ -8,18 +8,19 @@ import { setCartItemsCount } from "../redux/cartSlice"
 
 
 const ProductList = () => {
+    const token = localStorage.getItem('token')
 
     const [productList, setProductList] = useState([])
     const dispatch = useDispatch()
 
-    const fetchAllProducts = async () => {
-        const res = await fetchProducts()
+    const fetchAllProducts = async (token) => {
+        const res = await fetchProducts(token)
         setProductList(res)
     }
 
-    const cartItemsCount = async ()=>{
+    const cartItemsCount = async (token)=>{
         try{
-            const res = await getCartItemsCount()
+            const res = await getCartItemsCount(token)
             dispatch(setCartItemsCount(res.length))
         }catch(error){
             console.log(error)
@@ -30,8 +31,8 @@ const ProductList = () => {
 
     useEffect(() => {
 
-        fetchAllProducts()
-        cartItemsCount()
+        fetchAllProducts(token)
+        cartItemsCount(token)
 
     }, [])
 
@@ -47,8 +48,6 @@ const ProductList = () => {
         }
         
     }
-
-
 
     return (
         <div className="container">

@@ -16,9 +16,11 @@ const Login = () => {
         e.preventDefault()
         try{
             const res = await login(userData.email,userData.password)
+            console.log(res,'res')
             toast.success('Successfully Loged In')
             localStorage.setItem('token',res.token)
-            navigate('/products')
+            localStorage.setItem('role',res.role)
+            navigate(res?.url)
         }catch(error){
             console.log(error)
         }

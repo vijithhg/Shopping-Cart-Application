@@ -78,6 +78,7 @@ const getProductById = async(req,res)=>{
 
 const updateProductById = async(req, res) => {
     const { id } = req.params;
+    console.log(req.body)
     try {
       const product = await ProductModel.findByIdAndUpdate(
         id,

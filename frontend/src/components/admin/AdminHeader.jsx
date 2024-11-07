@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
-const Header = () => {
+const AdminHeader = () => {
 
   const logoutHandler = ()=>{
     localStorage.removeItem('token')
@@ -33,8 +33,18 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/products">
+              <Link className="nav-link" to="/admin/users">
+                Users
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/admin/products">
                 Products
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/admin/orders">
+                Orders
               </Link>
             </li>
             <li>
@@ -42,12 +52,7 @@ const Header = () => {
                 Logout
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/cart">
-                <FontAwesomeIcon icon={faShoppingCart} />
-                <span className="badge bg-danger ms-1">{cartItemsCount}</span>
-              </Link>
-            </li>
+           
           </ul>
         </div>
       </div>
@@ -55,4 +60,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AdminHeader;

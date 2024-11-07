@@ -3,6 +3,7 @@ const Product = require('../models/Product');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken')
 
+// Add an item to the cart or update quantity if it already exists
 const addItemToCart = async (req, res) => {
   const { productID, quantity } = req.body;
   if(!productID ){
@@ -37,7 +38,7 @@ const addItemToCart = async (req, res) => {
   }
 
   // Find the product
-  const product = await Product.findById(productID); // No need for `{_id: productID}`
+  const product = await Product.findById(productID); 
   if (!product) {
     return res.status(404).json({ message: 'Product not found' });
   }
@@ -99,16 +100,23 @@ const getCartByUser = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found for this user' });
     }
 
+    // Calculate total amount of all items
+    const totalAmount = cart.items.reduce((sum, item) => sum + item.totalPrice, 0);
+
     const updatedCart = {
       ...cart._doc,
       items: cart.items.map(item => ({
-        ...item._doc,
+        _id: item._id,
         productID: {
           ...item.productID._doc,
-          image: `${process.env.BACKEND_URL}/uploads/${item.productID.image}`
-        }
-      }))
+          image: `${process.env.IMAGE_URL}/uploads/${item.productID.image}`
+        },
+        quantity: item.quantity,
+        totalPrice: item.totalPrice
+      })),
+      totalAmount 
     };
+
     res.status(200).json(updatedCart);
   } catch (error) {
     res.status(400).json({ message: error.message });
