@@ -2,9 +2,7 @@ import axios from 'axios'
 import { API_URL } from '../constants/api'
 
 
-const token = localStorage.getItem('token')
-
-export const fetchProducts = async()=>{
+export const fetchProducts = async(token)=>{
     try{
         const response = await axios.get(`${API_URL}/products`,{
             headers:{
@@ -16,4 +14,19 @@ export const fetchProducts = async()=>{
         console.log(error)
     }
    
+}
+
+export const updateProductById = async(token,id,stockQuantity)=>{
+    try{
+        const response = await axios.put(`${API_URL}/products/${id}`,{
+            stockQuantity
+        },{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    }catch(error){
+        console.log(error)
+    }
 }
