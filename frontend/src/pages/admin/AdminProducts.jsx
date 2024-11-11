@@ -37,7 +37,7 @@ const AdminProducts = () => {
     try{
         const res = await updateProductById(token,productUpdateValues.id,productUpdateValues.stockQuantity) 
         setModalShow(false)
-        
+        getAllProduct()
 
     }catch(error){
         console.log(error)

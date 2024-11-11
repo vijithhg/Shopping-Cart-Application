@@ -17,10 +17,13 @@ const Login = () => {
         try{
             const res = await login(userData.email,userData.password)
             console.log(res,'res')
-            toast.success('Successfully Loged In')
-            localStorage.setItem('token',res.token)
-            localStorage.setItem('role',res.role)
-            navigate(res?.url)
+            if(res?.success){
+                toast.success('Successfully Loged In')
+                localStorage.setItem('token',res.token)
+                localStorage.setItem('role',res.role)
+                navigate(res?.url)
+            }
+           
         }catch(error){
             console.log(error)
         }

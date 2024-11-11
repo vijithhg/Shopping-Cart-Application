@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '../constants/api'
+import toast from "react-hot-toast"
 
 const AUTH_API = `${API_URL}/auth`
 
@@ -21,6 +22,7 @@ export const login = async(email,password)=>{
         })
         return response.data
     }catch(error){
-        console.log(error)
+        console.log(error?.response?.data?.message)
+        toast.error(error?.response?.data?.message)
     }
 }

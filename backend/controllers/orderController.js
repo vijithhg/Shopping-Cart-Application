@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const Product = require('../models/Product');
 const jwt = require('jsonwebtoken')
 
+
 // Create a new order
 const createOrder = async (req, res) => {
   const { products,address } = req.body;

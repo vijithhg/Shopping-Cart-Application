@@ -9,6 +9,8 @@ import CheckOut from './pages/Checkout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProtectedRoutes from './middleware/AdminProtectRoute';
 import AdminProducts from './pages/admin/AdminProducts'
+import AdminOrderPlaced from './pages/admin/AdminOrderPlaced';
+import UsersList from './pages/admin/UsersList';
 
 
 function App() {
@@ -43,6 +45,20 @@ function App() {
         <Route path="/admin/products" element={
           <AdminProtectedRoutes>
             <AdminProducts />
+          </AdminProtectedRoutes>
+
+        } />
+
+<Route path="/admin/orders" element={
+          <AdminProtectedRoutes>
+            <AdminOrderPlaced />
+          </AdminProtectedRoutes>
+
+        } />
+
+<Route path="/admin/users" element={
+          <AdminProtectedRoutes>
+            <UsersList />
           </AdminProtectedRoutes>
 
         } />
